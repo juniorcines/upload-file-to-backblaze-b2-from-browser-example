@@ -24,27 +24,7 @@ The example has two components:
 Create a bucket and use the B2 CLI to apply custom CORS rules. The contents of the `b2CorsRules.json` file in this repo can be used as an example. The policy allows downloads and uploads from any origin. Note that the argument `--corsRules` must be the contents of the CORS policy, not a path to a JSON file on disk with the CORS policy:
 
 ```bash
-b2 update-bucket --corsRules '[
-    {
-        "corsRuleName": "downloadFromAnyOriginWithUpload",
-        "allowedOrigins": [
-            "*"
-        ],
-        "allowedHeaders": [
-            "authorization",
-            "content-type",
-            "x-bz-file-name",
-            "x-bz-content-sha1"
-        ],
-        "allowedOperations": [
-            "b2_download_file_by_id",
-            "b2_download_file_by_name",
-            "b2_upload_file",
-            "b2_upload_part"
-        ],
-        "maxAgeSeconds": 3600
-    }
-]' yourBucketName allPublic
+b2 update-bucket yourBucketName allPublic --cors-rules "[{\"corsRuleName\":\"downloadFromAnyOriginWithUpload\",\"allowedOrigins\":[\"*\"],\"allowedHeaders\":[\"authorization\",\"content-type\",\"x-bz-file-name\",\"x-bz-content-sha1\"],\"allowedOperations\":[\"b2_download_file_by_id\",\"b2_download_file_by_name\",\"b2_upload_file\",\"b2_upload_part\"],\"maxAgeSeconds\":3600}]"
 ```
 
 You'll know you've successfully applied your CORS policy if the B2 web UI shows the option "There are 'custom' rules in place" selected:
